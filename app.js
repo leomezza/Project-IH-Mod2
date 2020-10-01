@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const connectMongo = require('connect-mongo');
+const logger = require('morgan');
 
 const MongoStore = connectMongo(session);
 
@@ -17,7 +18,7 @@ const app = express();
 require('./configs/db.config');
 
 // Middleware Setup
-app.use(logger('dev')); //check usefulness
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
