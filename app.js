@@ -43,6 +43,6 @@ hbs.registerPartials(__dirname + '/views/partials');
 app.use('/', index);
 app.use('/', prot);
 
-server.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, () => {
   console.log(`Listening on http://localhost:${process.env.PORT}`);
 });
