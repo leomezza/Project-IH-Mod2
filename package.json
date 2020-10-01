@@ -1,0 +1,33 @@
+{
+  "name": "orbuk",
+  "version": "1.0.0",
+  "description": "Social network for your books",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leomezza/Project-IH-Mod2.git"
+  },
+  "author": "Leo e Cy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leomezza/Project-IH-Mod2/issues"
+  },
+  "homepage": "https://github.com/leomezza/Project-IH-Mod2#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-mongo": "^3.2.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "hbs": "^4.1.1",
+    "mongoose": "^5.10.7",
+    "morgan": "^1.10.0"
+  }
+}

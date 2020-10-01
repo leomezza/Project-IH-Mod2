@@ -1,0 +1,64 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00b7ff;
+}
+
+form {
+  width: 640px;
+  padding: 15px;
+  border: 2px solid gray;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  opacity: 0.9;
+  border-radius: 5px;
+}
+
+button:hover {
+  opacity: 1;
+}
+
+a > button {
+  background-color: blue;
+}
+
+span {
+  font-size: 10px;
+  font-style: italic;
+}
+
+div {
+  margin: 5px;
+}
+
+label {
+  display: inline-block;
+  width: 150px;
+}
+
+input:invalid {
+  box-shadow: 0 0 3px 1px yellow;
+}
+
+input:invalid:required {
+  background-color: lightcyan;
+}
+
+input:valid {
+  border: 1px solid black;
+}
+
+input:focus:invalid {
+  box-shadow: none;
+}

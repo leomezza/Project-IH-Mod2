@@ -1,0 +1,39 @@
+<form action="/login" method="post">
+  <div>
+    <label for="email">E-mail</label>
+    <input type="text" name="email" id="email" placeholder="Digite seu e-mail">
+    {{#if emailError}}
+    <div>
+      <span>{{emailError}}</span>
+    </div>
+    {{/if}}
+  </div>
+
+  <div>
+    <label for="password">Senha</label>
+    <input type="password" name="password" id="password" placeholder="Digite sua senha">
+    {{#if passwordError}}
+    <div>
+      <span>{{passwordError}}</span>
+    </div>
+    {{/if}}
+  </div>
+
+  {{#if errorMessage}}
+  <div>
+    <span>{{errorMessage}}</span>
+  </div>
+  {{/if}}
+
+  {{#if sessionExpired}}
+  <div>
+    <span>Sessão expirada, faça novo login</span>
+  </div>
+  {{/if}}
+
+  <button type="submit">Entrar</button>
+
+  <a href="/signup">
+    <button type="button">Criar uma conta</button>
+  </a>
+</form>
