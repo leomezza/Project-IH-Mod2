@@ -5,14 +5,9 @@ const router = express.Router();
 
 // router.use(protRoutes);
 
-router.get('/main', (req, res) => {
-  console.log('Main page');
-  res.render('main');
-});
-
-router.get('/private', (req, res) => {
-  console.log('Private page');
-  res.render('private');
+router.get('/dashboard', (req, res) => {
+  console.log('Dashboard page');
+  res.render('dashboard');
 });
 
 module.exports = router;
