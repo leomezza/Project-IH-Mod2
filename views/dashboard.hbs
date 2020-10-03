@@ -1,10 +1,94 @@
+<nav>
+  <div>
+    <img src="/images/dummyLogo.jpg" alt="orbuk main logo">
+
+    <img class="avatar-image" src="/images/default-avatar.svg" alt="user-avatar">
+
+    <span>Leonardo Mezzanotti</span>
+
+    <span>New book</span>
+
+    <a href="/logout">Logout</a>
+  </div>
+</nav>
+
 <div>
   <label for="isbn-num">Search book by ISBN:</label>
-  <input type="number" name="isbn-num" id="isbn-num" min="10" max="13" />
+  <input type="string" name="isbn-num" id="isbn-num" />
   <button id="isbn-search">Search</button>
 </div>
 
 <div id="book-result">
 </div>
+
+<div id="add-book-form">
+</div>
+
+<main>
+  {{#if data}}
+  <div class="books-list">
+    <h2>My Books</h2>
+    {{#each data}}
+    <div class="book-info">
+      <div class="coverURL"><img src="{{coverURL}}" alt="Cover not available"></div>
+      <div class="title">Title: <span>{{title}}</span></div>
+      <div class="author">Authors:
+        {{#each author}}
+        <span>{{this}}</span>
+        {{/each}}
+      </div>
+      <div class="isbn_10">ISBN-10: <span>{{isbn_10}}</span></div>
+      <div class="isbn_13">ISBN-13: <span>{{isbn_13}}</span></div>
+      <div class="summary">Summary: <span>{{summary}}</span></div>
+      <div class="evaluation">Evaluation: <span>{{evaluation.[0].eval}}</span></div>
+      <div class="readStatus">Read Status: <span>{{readStatus.[0].status}}</span></div>
+    </div>
+    {{/each}}
+  </div>
+
+  {{else}}
+  <div class="empty-books">
+    <h2>There are no books yet</h2>
+  </div>
+  {{/if}}
+</main>
+
+<section>
+  <h2>Most read</h2>
+  {{#if mostRead}}
+  <div class="most-read-list">
+    {{#each mostRead}}
+    <div class="read-book-info">
+      <div class="title">Title: <span>{{title}}</span></div>
+      <div class="readStatus">Read Status: <span>{{readStatus.[0].status}}</span></div>
+    </div>
+    {{/each}}
+  </div>
+
+  {{else}}
+  <div class="empty-books">
+    <h2>There are no read books yet</h2>
+  </div>
+  {{/if}}
+</section>
+
+<section>
+  <h2>Most recommended</h2>
+  {{#if mostRec}}
+  <div class="most-rec-list">
+    {{#each mostRec}}
+    <div class="rec-book-info">
+      <div class="title">Title: <span>{{title}}</span></div>
+      <div class="evaluation">Evaluation: <span>{{evaluation.[0].eval}}</span></div>
+    </div>
+    {{/each}}
+  </div>
+
+  {{else}}
+  <div class="empty-books">
+    <h2>There are no recommended books yet</h2>
+  </div>
+  {{/if}}
+</section>
 
 <script src="/javascripts/dashboard.js" charset="utf-8"></script>

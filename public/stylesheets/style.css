@@ -3,6 +3,21 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+nav > div {
+  display: flex;
+  justify-content: space-around;
+  height: 50px;
+}
+
+nav > div > img{
+  height: 40px;
+  width: 40px;
+}
+
+.coverURL > img {
+  height: 100px;
+}
+
 a {
   color: #00b7ff;
 }
