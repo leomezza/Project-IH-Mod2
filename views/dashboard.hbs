@@ -1,105 +1,94 @@
 <nav>
   <div>
-    <img src="/images/shorty-logo.svg" alt="shorty-app-main-logo">
-  </div>
+    <img src="/images/dummyLogo.jpg" alt="orbuk main logo">
 
-  <div class="navigation-profile">
-    <button class="btn-main" type="button" data-toggle="modal" data-target="#createUrlModal">
-      {{>createUrlButtonContent}}
-    </button>
+    <img class="avatar-image" src="/images/default-avatar.svg" alt="user-avatar">
 
-    <div>
-      <img class="avatar-image" src="{{loggedUser.imageAvatar}}" alt="user-profile-avatar">
+    <span>Leonardo Mezzanotti</span>
 
-      <div class="dropdown">
-        <img class="arrow-menu" src="/images/down-arrow.svg" alt="down-arrow-icon" id="dropdownMenuButton"
-          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {{>navBarMenuDropDown}}
-      </div>
+    <span>New book</span>
 
-      <span>{{loggedUser.fullName}}</span>
-    </div>
+    <a href="/logout">Logout</a>
   </div>
 </nav>
 
-<div class="modal fade" id="createUrlModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
+<div>
+  <label for="isbn-num">Search book by ISBN:</label>
+  <input type="string" name="isbn-num" id="isbn-num" />
+  <button id="isbn-search">Search</button>
+</div>
 
-        <form class="needs-validation" action="/url/create" method="post">
-          <h2>Criar nova URL</h2>
+<div id="book-result">
+</div>
 
-          <div class="modal-field">
-            <label for="protocol">Protocolo</label>
-            <select class="modal-input" name="protocol" id="protocol" placeholder="Procolo" required>
-              <option value="http://">HTTP</option>
-              <option value="https://">HTTPS</option>
-            </select>
-          </div>
-
-          <div class="modal-field">
-            <label for="redirectUrl">URL de redirecionamento</label>
-            <input class="modal-input" type="text" name="redirectUrl" id="redirectUrl"
-              placeholder="Insira a URL de redirecionamento" required>
-          </div>
-
-          <div class="modal-field">
-            <label for="expirationDate">Data de Expiração</label>
-            <div>
-              <img src="/images/date-form-icon.svg" alt="" srcset="">
-              <input class="modal-input" type="text" name="expirationDate" id="expirationDate"
-                placeholder="Defina a data de expiração" onfocus="(this.type='date')" onblur="(this.type='text')"
-                required>
-            </div>
-          </div>
-
-          <div class="modal-action-buttons">
-            <button type="button" class="btn-outline" data-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn-main">Criar URL</button>
-          </div>
-        </form>
-
-      </div>
-    </div>
-  </div>
+<div id="add-book-form">
 </div>
 
 <main>
   {{#if data}}
-  <div class="info-dash-container">
-    <h2>Lista de URLs</h2>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">URL encurtada</th>
-          <th scope="col">URL de redirecionamento</th>
-          <th scope="col">Data de criação</th>
-          <th scope="col">Data de expiração</th>
-          <th scope="col">Status da url</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody id="table-body">
-        {{#each data}}
-        {{>urlTableRows this}}
+  <div class="books-list">
+    <h2>My Books</h2>
+    {{#each data}}
+    <div class="book-info">
+      <div class="coverURL"><img src="{{coverURL}}" alt="Cover not available"></div>
+      <div class="title">Title: <span>{{title}}</span></div>
+      <div class="author">Authors:
+        {{#each author}}
+        <span>{{this}}</span>
         {{/each}}
-      </tbody>
-    </table>
+      </div>
+      <div class="isbn_10">ISBN-10: <span>{{isbn_10}}</span></div>
+      <div class="isbn_13">ISBN-13: <span>{{isbn_13}}</span></div>
+      <div class="summary">Summary: <span>{{summary}}</span></div>
+      <div class="evaluation">Evaluation: <span>{{evaluation.[0].eval}}</span></div>
+      <div class="readStatus">Read Status: <span>{{readStatus.[0].status}}</span></div>
+    </div>
+    {{/each}}
   </div>
 
   {{else}}
-  <div class="empty-dash-container">
-    <img src="/images/url-icon-big.svg" alt="url icon image big size">
-
-    <h2>Ainda não existe URLs criadas.</h2>
-
-    <p>Para criar uma nova URL clique no botão abaixo.</p>
-
-    <button class="btn-main" type="button" data-toggle="modal" data-target="#createUrlModal">
-      {{>createUrlButtonContent}}
-    </button>
+  <div class="empty-books">
+    <h2>There are no books yet</h2>
   </div>
   {{/if}}
 </main>
+
+<section>
+  <h2>Most read</h2>
+  {{#if mostRead}}
+  <div class="most-read-list">
+    {{#each mostRead}}
+    <div class="read-book-info">
+      <div class="title">Title: <span>{{title}}</span></div>
+      <div class="readStatus">Read Status: <span>{{readStatus.[0].status}}</span></div>
+    </div>
+    {{/each}}
+  </div>
+
+  {{else}}
+  <div class="empty-books">
+    <h2>There are no read books yet</h2>
+  </div>
+  {{/if}}
+</section>
+
+<section>
+  <h2>Most recommended</h2>
+  {{#if mostRec}}
+  <div class="most-rec-list">
+    {{#each mostRec}}
+    <div class="rec-book-info">
+      <div class="title">Title: <span>{{title}}</span></div>
+      <div class="evaluation">Evaluation: <span>{{evaluation.[0].eval}}</span></div>
+    </div>
+    {{/each}}
+  </div>
+
+  {{else}}
+  <div class="empty-books">
+    <h2>There are no recommended books yet</h2>
+  </div>
+  {{/if}}
+</section>
+
+<script src="/javascripts/dashboard.js" charset="utf-8"></script>
