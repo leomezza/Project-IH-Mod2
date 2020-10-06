@@ -1,38 +1,48 @@
 <form action="/signup" method="post">
   <div>
-    <label for="fullName">Nome Completo</label>
-    <input type="text" name="fullName" id="fullName" placeholder="Digite seu nome completo">
+    <label for="firstName">Name</label>
+    <input type="text" name="firstName" id="firstName" placeholder="Enter your name" onkeyup="manage(this)"> 
+  </div>
 
-    {{#if fullNameError}}
+  <div>
+    <label for="lastName">Last Name</label>
+    <input type="text" name="lastName" id="lastName" placeholder="Enter your last name" onkeyup="manage(this)">
+  </div>
+
+  <div>
+    <label for="username">E-mail</label>
+    <input type="text" name="username" id="username" placeholder="Enter your e-mail" onkeyup="manage(this)">
+    {{#if usernameError}}
     <div>
-      <span>{{fullNameError}}</span>
+      <span>{{usernameError}}</span>
     </div>
     {{/if}}
   </div>
 
   <div>
-    <label for="email">E-mail</label>
-    <input type="text" name="email" id="email" placeholder="Digite seu e-mail">
-    {{#if emailError}}
-    <div>
-      <span>{{emailError}}</span>
-    </div>
-    {{/if}}
+    <label for="phone">Telephone</label>
+    <input type="text" name="phone" id="phone" placeholder="Enter your telephone" onkeyup="manage(this)" onkeypress="return isNumberKey(event)">
   </div>
 
   <div>
-    <label for="cpf">CPF</label>
-    <input type="text" name="cpf" id="cpf" placeholder="Digite seu CPF">
-    {{#if cpfError}}
-    <div>
-      <span>{{cpfError}}</span>
-    </div>
-    {{/if}}
+    <p>Secret Question</p>
+    <select name="secretQuestion">
+      <option value="What was your childhood nickname?">What was your childhood nickname?</option>
+      <option value="What is the name of your favorite childhood friend?">What is the name of your favorite childhood friend?</option>
+      <option value="What was the name of your first pet?">What was the name of your first pet?</option>
+      <option value="What is your mothers maiden name?">What is your mothers maiden name?</option>
+    </select>
   </div>
 
   <div>
-    <label for="password">Senha</label>
-    <input type="password" name="password" id="password" placeholder="Digite sua senha">
+    <label for="secretAnswer">Secret Answer</label>
+    <input type="text" name="secretAnswer" id="secretAnswer" placeholder="Enter your secret answer" onkeyup="manage(this)">
+  </div>
+
+
+  <div>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" placeholder="Enter a password" onkeyup="manage(this)">
     {{#if passwordError}}
     <div>
       <span>{{passwordError}}</span>
@@ -41,8 +51,8 @@
   </div>
 
   <div>
-    <label for="confirmationPassword">Confirmação de Senha</label>
-    <input type="password" name="confirmationPassword" id="confirmationPassword" placeholder="Confirme sua senha">
+    <label for="confirmationPassword">Confirm Password</label>
+    <input type="password" name="confirmationPassword" id="confirmationPassword"  placeholder="Confirm your password" onkeyup="manage(this)">
     {{#if confirmationPasswordError}}
     <div>
       <span>{{confirmationPasswordError}}</span>
@@ -56,9 +66,33 @@
   </div>
   {{/if}}
 
-  <button type="submit">Cadastrar</button>
+  <input type="submit" id="submit" value="Submit" disabled />
 
-  <a href="/login">
-    <button type="button">Entrar com minha conta</button>
-  </a>
+  <div class="already-account">
+    <p>Have an account?</p><a href="/">Click here</a>
+  </div>
+
+  <script>
+    function manage(txt) {
+        var bt = document.getElementById('submit');
+        var ele = document.getElementsByTagName('input'); 
+
+        for (i = 0; i < ele.length; i++) {
+
+            if ((ele[i].type === 'text'|| ele[i].type === 'password') && ele[i].value == '') {
+                bt.disabled = true;    // Disable the button.
+                return false;
+            }
+            else {
+                bt.disabled = false;   // Enable the button.
+            }
+        }
+    }
+
+    function isNumberKey(event){
+    if (event.keyCode > 31 && (event.keyCode < 48 || event.keyCode > 57))
+        return false;
+    return true;
+}
+  </script>
 </form>
