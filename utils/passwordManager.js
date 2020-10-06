@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const bcrypt = require('bcryptjs');
 
 const saltRounds = 10;
@@ -10,9 +11,7 @@ const generateEncryptedPassword = async password => {
   return encryptedPassword;
 };
 
-const verifyPassword = (passwordFromForm, passwordFromDb) => {
-  return bcrypt.compareSync(passwordFromForm, passwordFromDb);
-};
+const verifyPassword = (passwordFromForm, passwordFromDb) => bcrypt.compareSync(passwordFromForm, passwordFromDb);
 
 module.exports = {
   generateEncryptedPassword,

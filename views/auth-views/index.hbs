@@ -1,0 +1,61 @@
+<form action="/" method="post">
+  <div>
+    <label for="username">E-mail</label>
+    <input type="text" name="username" id="username" placeholder="Enter your e-mail" onkeyup="manage(this)">
+    {{#if usernameError}}
+    <div>
+      <span>{{usernameError}}</span>
+    </div>
+    {{/if}}
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" placeholder="Enter your password" onkeyup="manage(this)">
+    {{#if passwordError}}
+    <div>
+      <span>{{passwordError}}</span>
+    </div>
+    {{/if}}
+  </div>
+
+  <div class="forgot-password">
+    <p>Forgot your password?</p><a href="/forgotpass">Click here</a>
+  </div>
+
+  {{#if errorMessage}}
+  <div>
+    <span>{{errorMessage}}</span>
+  </div>
+  {{/if}}
+
+  {{#if sessionExpired}}
+  <div>
+    <span>Expired session, login again.</span>
+  </div>
+  {{/if}}
+
+  <input type="submit" id="submit" value="Login" disabled />
+
+  <div class="forgot-password">
+    <p>Not a member?</p><a href="/signup">Register here</a>
+  </div>
+
+   <script>
+    function manage(txt) {
+        var bt = document.getElementById('submit');
+        var ele = document.getElementsByTagName('input'); 
+
+        for (i = 0; i < ele.length; i++) {
+
+            if ((ele[i].type === 'text'|| ele[i].type === 'password') && ele[i].value == '') {
+                bt.disabled = true;    // Disable the button.
+                return false;
+            }
+            else {
+                bt.disabled = false;   // Enable the button.
+            }
+        }
+    }
+  </script>
+</form>

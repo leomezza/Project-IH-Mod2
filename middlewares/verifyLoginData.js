@@ -4,13 +4,22 @@ const { verifyPassword } = require('../utils/passwordManager');
 const verifyLoginData = async (req, res, next) => {
   const { username, password } = req.body;
 
-  if (!username || !password) {
+  const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+  if (!(username.match(mailformat))) {
     const errors = {
-      usernameError: !username ? 'Username required' : undefined,
-      passwordError: !password ? 'Password required' : undefined,
+      usernameError: 'Invalid e-mail format',
     };
 
-    res.render('login', errors);
+    res.render('auth-views/index', errors);
+
+    return;
+  }
+
+  const userExists = await User.findOne({ username });
+
+  if (!userExists) {
+    res.render('auth-views/index', { errorMessage: 'Incorrect username or password, please try again' });
 
     return;
   }
@@ -20,15 +29,7 @@ const verifyLoginData = async (req, res, next) => {
       passwordError: password.length < 6 ? 'Password must contain at least 6 characters' : undefined,
     };
 
-    res.render('login', errors);
-
-    return;
-  }
-
-  const userExists = await User.findOne({ username });
-
-  if (!userExists) {
-    res.render('login', { errorMessage: 'Incorrect username or password, please try again' });
+    res.render('auth-views/index', errors);
 
     return;
   }
@@ -36,7 +37,7 @@ const verifyLoginData = async (req, res, next) => {
   const isPasswordMatch = verifyPassword(password, userExists.password);
 
   if (!isPasswordMatch) {
-    res.render('login', { errorMessage: 'Incorrect username or password, please try again' });
+    res.render('auth-views/index', { errorMessage: 'Incorrect username or password, please try again' });
 
     return;
   }

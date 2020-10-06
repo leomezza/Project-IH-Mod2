@@ -13,9 +13,9 @@ const userSchema = new Schema({
   secretAnswer: { type: String, required: true },
   books: {type: [String] },
 },
-  {
-    timestamps: true,
-  });
+{
+  timestamps: true,
+});
 
 const User = mongoose.model('user', userSchema);
 
