@@ -1,6 +1,6 @@
 const redirectIfLoggedIn = (req, res, next) => {
   if (req.session.currentUser) {
-    res.redirect('/main');
+    res.redirect('/dashboard');
     return;
   }
 
