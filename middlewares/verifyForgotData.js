@@ -1,19 +1,8 @@
 const User = require('../models/User.model');
 
 const verifyForgotData = async (req, res, next) => {
-  const { username, password, confirmationPassword } = req.body;
-
-  // const usernameExists = await User.findOne({ username });
-
-  // if (!(username === usernameExists)) {
-  //   const errors = {
-  //     usernameError: 'E-mail does not exist',
-  //   };
-
-  //   res.render('auth-views/forgotpassreq.session.currentUser = userAuthCopy;', errors);
-
-  //   return;
-  // }
+  const { username, phone, secretQuestion, secretAnswer, 
+    password, confirmationPassword } = req.body;
 
   const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -22,7 +11,23 @@ const verifyForgotData = async (req, res, next) => {
       usernameError: 'Invalid e-mail format',
     };
 
-    res.render('auth-views/signup', errors);
+    res.render('auth-views/forgotpass', errors);
+
+    return;
+  }
+
+  const userExists = await User.findOne({ username });
+
+  if (!userExists) {
+    res.render('auth-views/forgotpass', { errorMessage: 'Incorrect username, please try again' });
+
+    return;
+  }
+
+  if (!(userExists.secretQuestion === secretQuestion) || 
+  !(userExists.secretAnswer === secretAnswer) ||
+  !(userExists.phone === +phone)) {
+    res.render('auth-views/forgotpass', { errorMessage: 'Invalid information, please try again' });
 
     return;
   }
@@ -32,21 +37,21 @@ const verifyForgotData = async (req, res, next) => {
       passwordError: password.length < 6 ? 'Password must contain at least 6 characters' : undefined,
     };
 
-    res.render('auth-views/signup.hbs', errors);
+    res.render('auth-views/forgotpass', errors);
 
     return;
   }
 
-  // if (!(password === confirmationPassword)) {
-  //   const errors = {
-  //     passwordError: 'Password does not match',
-  //     confirmationPasswordError: 'Password does not match',
-  //   };
+  if (!(password === confirmationPassword)) {
+    const errors = {
+      passwordError: 'Password does not match',
+      confirmationPasswordError: 'Password does not match',
+    };
 
-  //   res.render('auth-views/signup.hbs', errors);
+    res.render('auth-views/forgotpass', errors);
 
-  //   return;
-  // }
+    return;
+  }
 
   next();
 };

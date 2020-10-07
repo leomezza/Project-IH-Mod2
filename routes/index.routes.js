@@ -11,9 +11,9 @@ const verifyForgotData = require('../middlewares/verifyForgotData');
 const redirectIfLoggedIn = require('../middlewares/redirectIfLoggedIn');
 
 /* GET home page */
-// router.get('/', redirectIfLoggedIn, (req, res, next) => {
-//   res.render('auth-views/index.hbs');
-// });
+router.get('/', redirectIfLoggedIn, (req, res, next) => {
+  res.render('auth-views/index.hbs');
+});
 
 router.get('/', (req, res) => {
   console.log('Login page');
@@ -28,7 +28,7 @@ router.post('/', verifyLoginData, async (req, res) => {
 
     req.session.currentUser = userAuthCopy;
 
-    res.redirect('/');
+    res.redirect('/dashboard');
   } catch (error) {
     console.log(error);
   }
@@ -64,7 +64,7 @@ router.post('/signup', verifyData, async (req, res) => {
 
     await newUser.save();
 
-    res.redirect('/');
+    res.redirect('/dashboard');
   } catch (error) {
     console.log(error);
   }
@@ -77,13 +77,10 @@ router.get('/forgotpass', (req, res) => {
 
 router.post('/forgotpass', verifyForgotData, async (req, res) => {
   try {
-    const { password } = req.body;
+    const { username, password } = req.body;
 
-    const newPassword = new Password({
-      password: await generateEncryptedPassword(password),
-    });
-
-    await newPassword.save();
+    await User.findOneAndUpdate({username}, 
+      {password: await generateEncryptedPassword(password)});
 
     res.redirect('/');
   } catch (error) {
@@ -94,7 +91,7 @@ router.post('/forgotpass', verifyForgotData, async (req, res) => {
 router.get('/logout', (req, res) => {
   req.session.destroy();
 
-  res.redirect('/login');
+  res.redirect('/');
 });
 
 module.exports = router;
