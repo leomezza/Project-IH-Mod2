@@ -3,15 +3,19 @@ const router = express.Router();
 const Book = require('../models/Book.model');
 const User = require('../models/User.model');
 
-// const protRoutes = require('../middlewares/protRoutes');
+const protRoutes = require('../middlewares/protRoutes');
 
-// router.use(protRoutes);
+router.use(protRoutes);
 
 router.get('/dashboard', async (req, res) => {
   try {
-    const data = await Book.find();
+    const user = await User.findById(req.session.currentUser._id);
+    const userBooks = user.books;
 
-    const test = await Book.aggregate([
+    const data = await Book.find({ '_id': { $in: userBooks } });
+
+    const mostRead = await Book.aggregate([
+      { $match: { readStatus: { $elemMatch: { status: { $eq: "Finished" } } } } },
       {
         "$addFields": {
           "readStatusFinished": {
@@ -27,10 +31,29 @@ router.get('/dashboard', async (req, res) => {
       { "$sort": { "size": -1 } },
     ]);
 
-    console.log(test);
+    console.log('mostRead:', mostRead);
 
-    const mostRead = await Book.find({ readStatus: { $elemMatch: { status: { $eq: "Finished" } } } });
-    const mostRec = await Book.find({ evaluation: { $elemMatch: { eval: { $eq: "Up" } } } });
+    const mostRec = await Book.aggregate([
+      { $match: { evaluation: { $elemMatch: { eval: { $eq: "Up" } } } } },
+      {
+        "$addFields": {
+          "evaluationUp": {
+            "$filter": {
+              input: "$evaluation",
+              as: "item",
+              cond: { $regexMatch: { input: "$$item.eval", regex: /Up/ } }
+            }
+          }
+        }
+      },
+      { "$project": { "evaluationUp": 1, "title": 1, "size": { "$size": "$evaluationUp" } } },
+      { "$sort": { "size": -1 } },
+    ]);
+
+    console.log('mostRec:', mostRec);
+
+    // const mostRead = await Book.find({ readStatus: { $elemMatch: { status: { $eq: "Finished" } } } });
+    // const mostRec = await Book.find({ evaluation: { $elemMatch: { eval: { $eq: "Up" } } } });
 
     console.log('Dashboard page');
 
@@ -43,24 +66,40 @@ router.get('/dashboard', async (req, res) => {
 router.post('/addbook', async (req, res) => {
   const { coverURL, title, author, isbn_10, isbn_13, summary, eval, status } = req.body;
 
-  const createdUserId = '5f78792c5704ea07d17ff120';
+  const isBookInDB = await Book.findOne({ isbn_13: { $eq: isbn_13 } });
 
-  const authorToArray = author.split(',');
-  console.log(authorToArray);
+  console.log('Is book in DB: ', isBookInDB);
 
-  const newBook = new Book({
-    createdUserId,
-    title,
-    author: authorToArray,
-    isbn_10,
-    isbn_13,
-    coverURL,
-    summary,
-    evaluation: { userId: createdUserId, eval },
-    readStatus: { userId: createdUserId, status },
-  });
+  const createdUserId = req.session.currentUser._id;
 
-  await newBook.save();
+  if (isBookInDB) {
+    const addBook = {
+      evaluation: { userId: createdUserId, eval },
+      readStatus: { userId: createdUserId, status },
+    };
+
+    await Book.findByIdAndUpdate(isBookInDB._id, { $push: addBook });
+    await User.findByIdAndUpdate(req.session.currentUser._id, { $push: { books: isBookInDB._id } });
+
+  } else {
+    const authorToArray = author.split(',');
+
+    const newBook = new Book({
+      createdUserId,
+      title,
+      author: authorToArray,
+      isbn_10,
+      isbn_13,
+      coverURL,
+      summary,
+      evaluation: { userId: createdUserId, eval },
+      readStatus: { userId: createdUserId, status },
+    });
+
+    await newBook.save();
+    await User.findByIdAndUpdate(req.session.currentUser._id, { $push: { books: newBook._id } });
+
+  }
 
   res.redirect('/dashboard');
 });

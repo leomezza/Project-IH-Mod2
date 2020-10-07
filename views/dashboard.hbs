@@ -60,7 +60,7 @@
     {{#each mostRead}}
     <div class="read-book-info">
       <div class="title">Title: <span>{{title}}</span></div>
-      <div class="readStatus">Read Status: <span>{{readStatus.[0].status}}</span></div>
+      <div class="readStatus">Read count: <span>{{size}}</span></div>
     </div>
     {{/each}}
   </div>
@@ -79,7 +79,7 @@
     {{#each mostRec}}
     <div class="rec-book-info">
       <div class="title">Title: <span>{{title}}</span></div>
-      <div class="evaluation">Evaluation: <span>{{evaluation.[0].eval}}</span></div>
+      <div class="evaluation">Up count: <span>{{size}}</span></div>
     </div>
     {{/each}}
   </div>
