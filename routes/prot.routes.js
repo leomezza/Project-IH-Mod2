@@ -14,6 +14,29 @@ router.get('/dashboard', async (req, res) => {
 
     const data = await Book.find({ '_id': { $in: userBooks } });
 
+    data.forEach(book => {
+      const bookEval = book.evaluation;
+      // console.log('bookEval:', bookEval);
+      // console.log({ userID: user._id });
+      const filteredEval = bookEval.filter(eval => {
+        // console.log({ eval });
+        const x = JSON.stringify(eval.userId);
+        console.log(x);
+        console.log(typeof x);
+
+        const y = JSON.stringify(user._id);
+        console.log(y);
+        console.log(typeof y);
+
+        return x === y;
+      });
+
+      book.evaluation = filteredEval;
+
+    });
+
+    console.log('Filtered Data:', data);
+
     const mostRead = await Book.aggregate([
       { $match: { readStatus: { $elemMatch: { status: { $eq: "Finished" } } } } },
       {
@@ -31,7 +54,7 @@ router.get('/dashboard', async (req, res) => {
       { "$sort": { "size": -1 } },
     ]);
 
-    console.log('mostRead:', mostRead);
+    // console.log('mostRead:', mostRead);
 
     const mostRec = await Book.aggregate([
       { $match: { evaluation: { $elemMatch: { eval: { $eq: "Up" } } } } },
@@ -50,14 +73,14 @@ router.get('/dashboard', async (req, res) => {
       { "$sort": { "size": -1 } },
     ]);
 
-    console.log('mostRec:', mostRec);
+    // console.log('mostRec:', mostRec);
 
     // const mostRead = await Book.find({ readStatus: { $elemMatch: { status: { $eq: "Finished" } } } });
     // const mostRec = await Book.find({ evaluation: { $elemMatch: { eval: { $eq: "Up" } } } });
 
     console.log('Dashboard page');
 
-    res.render('dashboard', { data, mostRead, mostRec });
+    res.render('dashboard', { loggedUser: req.session.currentUser, data, mostRead, mostRec });
   } catch (error) {
     console.log(error);
   }
