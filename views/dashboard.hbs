@@ -6,16 +6,13 @@
 
     <span>{{loggedUser.firstName}} {{loggedUser.lastName}}</span>
 
-    <span>New book</span>
+    <button id="new-book">New book</button>
 
     <a href="/logout">Logout</a>
   </div>
 </nav>
 
-<div>
-  <label for="isbn-num">Search book by ISBN:</label>
-  <input type="string" name="isbn-num" id="isbn-num" />
-  <button id="isbn-search">Search</button>
+<div id="book-search">
 </div>
 
 <div id="book-result">
@@ -30,18 +27,18 @@
     <h2>My Books</h2>
     {{#each data}}
     <div class="book-info">
-      <div class="coverURL"><img src="{{coverURL}}" alt="Cover not available"></div>
-      <div class="title">Title: <span>{{title}}</span></div>
+      <div class="coverURL"><img class="coverURLin" src="{{coverURL}}" alt="Cover not available"></div>
+      <div class="title">Title: <span class="titlein">{{title}}</span></div>
       <div class="author">Authors:
         {{#each author}}
-        <span>{{this}}</span>
+        <span class="authorin">{{this}}</span>
         {{/each}}
       </div>
-      <div class="isbn_10">ISBN-10: <span>{{isbn_10}}</span></div>
-      <div class="isbn_13">ISBN-13: <span>{{isbn_13}}</span></div>
-      <div class="summary">Summary: <span>{{summary}}</span></div>
-      <div class="evaluation">Evaluation: <span>{{evaluation.[0].eval}}</span></div>
-      <div class="readStatus">Read Status: <span>{{readStatus.[0].status}}</span></div>
+      <div class="isbn_10">ISBN-10: <span class="isbn_10in">{{isbn_10}}</span></div>
+      <div class="isbn_13">ISBN-13: <span class="isbn_13in">{{isbn_13}}</span></div>
+      <div style="display:none" class="summary">Summary: <span class="summaryin">{{summary}}</span></div>
+      <div class="evaluation">Evaluation: <span class="evaluationin">{{evaluation.[0].eval}}</span></div>
+      <div class="readStatus">Read Status: <span class="readStatusin">{{readStatus.[0].status}}</span></div>
     </div>
     {{/each}}
   </div>
@@ -52,6 +49,10 @@
   </div>
   {{/if}}
 </main>
+
+<section id="book-edit">
+
+</section>
 
 <section>
   <h2>Most read</h2>
