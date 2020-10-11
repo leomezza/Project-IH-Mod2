@@ -1,6 +1,6 @@
 const protRoutes = (req, res, next) => {
   if (!req.session.currentUser) {
-    res.redirect('/login?sessionExpired=true');
+    res.redirect('/?sessionExpired=true');
     return;
   }
 
