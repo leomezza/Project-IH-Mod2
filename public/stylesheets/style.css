@@ -1,4 +1,31 @@
+* {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: 'Lato', Arial, Helvetica, sans-serif !important;
+  
+}
+
 body {
+  background-color: #dddddd;
+}
+
+.form-signin {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.form-signin > img {
+  height: 722px;
+  width: 700px;
+  object-fit: cover;
+  margin-left: 0px;
+}
+
+#login-info {
+  margin-right: 300px;
+}
+/* body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
@@ -22,12 +49,7 @@ a {
   color: #00b7ff;
 }
 
-form {
-  width: 640px;
-  padding: 15px;
-  border: 2px solid gray;
-  border-radius: 5px;
-}
+
 
 button {
   background-color: #4caf50;
@@ -76,4 +98,4 @@ input:valid {
 
 input:focus:invalid {
   box-shadow: none;
-}
+} */

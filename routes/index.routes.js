@@ -64,7 +64,7 @@ router.post('/signup', verifyData, async (req, res) => {
 
     await newUser.save();
 
-    res.redirect('/dashboard');
+    res.redirect('/');
   } catch (error) {
     console.log(error);
   }
