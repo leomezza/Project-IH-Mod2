@@ -1,17 +1,22 @@
-<form action="/signup" method="post">
+<form class="form-signup d-flex flex-column align-items-center justify-content-center" action="/signup" method="post">
+  <img class="mb-4 rounded mx-auto d-block" src="./images/Logo.png" alt="Logo" width="100" height="100">
+  <h1 class="h3 mb-3 font-weight-normal">Sign up to join Orbuk.</h1>
   <div>
-    <label for="firstName">First Name</label>
-    <input type="text" name="firstName" id="firstName" placeholder="Enter your name" onkeyup="manage(this)"> 
+    <label for="inputFirstName" class="sr-only">First Name</label>
+    <input type="text" name="firstName" id="firstName" class="form-control mb-2 pl-2" placeholder="First Name" required
+      autofocus onkeyup="manage(this)">
   </div>
 
   <div>
-    <label for="lastName">Last Name</label>
-    <input type="text" name="lastName" id="lastName" placeholder="Enter your last name" onkeyup="manage(this)">
+    <label for="inputLastName" class="sr-only">Last Name</label>
+    <input type="text" name="lastName" id="lastName" class="form-control mb-2 pl-2" placeholder="Last Name"
+      required onkeyup="manage(this)">
   </div>
 
   <div>
-    <label for="username">E-mail</label>
-    <input type="text" name="username" id="username" placeholder="Enter your e-mail" onkeyup="manage(this)">
+    <label for="inputEmail" class="sr-only">E-mail</label>
+    <input type="text" name="username" id="username" class="form-control mb-2 pl-2" placeholder="Enter your e-mail"
+      required onkeyup="manage(this)">
     {{#if usernameError}}
     <div>
       <span>{{usernameError}}</span>
@@ -20,29 +25,34 @@
   </div>
 
   <div>
-    <label for="phone">Telephone</label>
-    <input type="text" name="phone" id="phone" placeholder="Enter your telephone" onkeyup="manage(this)" onkeypress="return isNumberKey(event)">
+    <label for="inputPhone" class="sr-only">Telephone</label>
+    <input type="text" name="phone" id="phone" class="form-control mb-2 pl-2" placeholder="Enter your telephone"
+      required onkeyup="manage(this)" onkeypress="return isNumberKey(event)">
   </div>
 
-  <div>
-    <p>Secret Question</p>
-    <select name="secretQuestion">
+  <div class="d-inline-flex p-2 bd-highlight">
+    <label for="selectSecretQuestion" class="sr-only">Secret Question</label>
+    <h4 class="h6 pr-2 font-weight-normal">Secret Question:</h4>
+    <select class="form-control form-control-sm" name="secretQuestion">
       <option value="What was your childhood nickname?">What was your childhood nickname?</option>
-      <option value="What is the name of your favorite childhood friend?">What is the name of your favorite childhood friend?</option>
+      <option value="What is the name of your favorite childhood friend?">What is the name of your favorite childhood
+        friend?</option>
       <option value="What was the name of your first pet?">What was the name of your first pet?</option>
       <option value="What is your mothers maiden name?">What is your mothers maiden name?</option>
     </select>
   </div>
 
   <div>
-    <label for="secretAnswer">Secret Answer</label>
-    <input type="text" name="secretAnswer" id="secretAnswer" placeholder="Enter your secret answer" onkeyup="manage(this)">
+    <label for="inputSecretAnswer" class="sr-only">Secret Answer</label>
+    <input type="text" name="secretAnswer" id="secretAnswer" class="form-control mb-2 pl-2"
+      placeholder="Enter your secret answer" required onkeyup="manage(this)">
   </div>
 
 
   <div>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" placeholder="Enter a password" onkeyup="manage(this)">
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" name="password" id="password" class="form-control mb-2 pl-2" placeholder="Enter a password"
+      required onkeyup="manage(this)">
     {{#if passwordError}}
     <div>
       <span>{{passwordError}}</span>
@@ -51,8 +61,9 @@
   </div>
 
   <div>
-    <label for="confirmationPassword">Confirm Password</label>
-    <input type="password" name="confirmationPassword" id="confirmationPassword"  placeholder="Confirm your password" onkeyup="manage(this)">
+    <label for="inputConfirmPassword" class="sr-only">Confirm Password</label>
+    <input type="password" name="confirmationPassword" id="confirmationPassword" class="form-control mb-2 pl-2"
+      placeholder="Confirm your password" required onkeyup="manage(this)">
     {{#if confirmationPasswordError}}
     <div>
       <span>{{confirmationPasswordError}}</span>
@@ -65,34 +76,37 @@
     <span>{{errorMessage}}</span>
   </div>
   {{/if}}
+  
+  <div>
+    <input class="btn mb-4 btn-lg btn-primary btn-block" type="submit" id="submit" value="Submit" disabled />
+  </div>
 
-  <input type="submit" id="submit" value="Submit" disabled />
 
-  <div class="already-account">
-    <p>Have an account?</p><a href="/">Click here</a>
+  <div class="already-account d-flex justify-content-center">
+    <p class="pr-2">Have an account?</p><a href="/">Click here</a>
   </div>
 
   <script>
     function manage(txt) {
-        var bt = document.getElementById('submit');
-        var ele = document.getElementsByTagName('input'); 
+      var bt = document.getElementById('submit');
+      var ele = document.getElementsByTagName('input');
 
-        for (i = 0; i < ele.length; i++) {
+      for (i = 0; i < ele.length; i++) {
 
-            if ((ele[i].type === 'text'|| ele[i].type === 'password') && ele[i].value == '') {
-                bt.disabled = true;    // Disable the button.
-                return false;
-            }
-            else {
-                bt.disabled = false;   // Enable the button.
-            }
+        if ((ele[i].type === 'text' || ele[i].type === 'password') && ele[i].value == '') {
+          bt.disabled = true;    // Disable the button.
+          return false;
         }
+        else {
+          bt.disabled = false;   // Enable the button.
+        }
+      }
     }
 
-    function isNumberKey(event){
-    if (event.keyCode > 31 && (event.keyCode < 48 || event.keyCode > 57))
+    function isNumberKey(event) {
+      if (event.keyCode > 31 && (event.keyCode < 48 || event.keyCode > 57))
         return false;
-    return true;
-}
+      return true;
+    }
   </script>
 </form>
