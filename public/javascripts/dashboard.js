@@ -40,34 +40,32 @@ function drawBook(book, isbnToSearch) {
   const allUserIsbn = [];
   document.querySelectorAll('.isbn_13in').forEach(isbn => allUserIsbn.push(isbn.innerText));
   console.log('All Books: ', allUserIsbn);
-  console.log('Searched book:',isbn_13,'typeof', typeof isbn_13);
+  console.log('Searched book:', isbn_13, 'typeof', typeof isbn_13);
 
   let str = '';
 
   if (allUserIsbn.includes(isbn_13)) {
     console.log('User already has this book');
     str = `<div class="book-info">
-    <div class="coverURL"><img src="${cover}" alt="Cover not available"></div>
+    <div class="coverURL"><img style="height: 100px;" src="${cover}" alt="Cover not available"></div>
     <div class="title">Title: <span>${title}</span></div>
     <div class="author">Authors: <ul>${authorsHTML}</ul></div>
     <div class="isbn_10">ISBN-10: <span>${isbn_10}</span></div>
     <div class="isbn_13">ISBN-13: <span>${isbn_13}</span></div>
     <div class="summary">Summary: <span>${summary}</span></div>
-    <span>You already have this book</span>
-    <button style="display:none" id="book-add">Add Book</button>
-    <button id="clear">Cancel</button>
+    <span class="bg-danger">You already have this book</span>
+    <button class="btn btn-primary" style="display:none" id="book-add" data-toggle="modal" data-target="#add-book-form-modal">Add Book</button>
     </div>`;
   } else {
     console.log('User does not have this book yet');
     str = `<div class="book-info">
-    <div class="coverURL"><img src="${cover}" alt="Cover not available"></div>
+    <div class="coverURL"><img style="height: 100px;" src="${cover}" alt="Cover not available"></div>
     <div class="title">Title: <span>${title}</span></div>
     <div class="author">Authors: <ul>${authorsHTML}</ul></div>
     <div class="isbn_10">ISBN-10: <span>${isbn_10}</span></div>
     <div class="isbn_13">ISBN-13: <span>${isbn_13}</span></div>
     <div class="summary">Summary: <span>${summary}</span></div>
-    <button id="book-add">Add Book</button>
-    <button id="clear">Cancel</button>
+    <button class="btn btn-primary" id="book-add" data-toggle="modal" data-target="#add-book-form-modal">Add Book</button>
     </div>`;
   }
 
@@ -137,7 +135,7 @@ function addBook(book, isbnToSearch) {
 document.getElementById('new-book').addEventListener('click', async event => {
   const str = `<label for="isbn-num">Search book by ISBN:</label>
   <input type="string" name="isbn-num" id="isbn-num" />
-  <button id="isbn-search">Search</button>`
+  <button id="isbn-search" class="btn btn-primary">Search</button>`
 
   document.getElementById('book-search').innerHTML = str;
 
@@ -154,6 +152,15 @@ document.getElementById('new-book').addEventListener('click', async event => {
   });
 });
 
+$('#book-search-modal').on('hidden.bs.modal', function (e) {
+  document.getElementById('book-result').innerHTML = '';
+  document.getElementById('add-book-form').innerHTML = '';
+})
+
+document.getElementById('close-modal').addEventListener('click', event => {
+  document.getElementById('book-result').innerHTML = '';
+  document.getElementById('add-book-form').innerHTML = '';
+});
 
 document.querySelectorAll('.book-info').forEach(book => {
   book.addEventListener('click', () => {
@@ -196,12 +203,13 @@ document.querySelectorAll('.book-info').forEach(book => {
     </select>
   </div>
 
-  <button type="submit">Edit</button></form>
-  <form action="/delbook?isbn_13=${isbn_13}" method="post"><button id="delete-book" type="submit">Delete</button></form>
-  <button type="button">Cancel</button>
+  <div class="d-flex">
+  <button type="submit" class="btn btn-primary px-1 mx-1">Edit</button></form>
+  <form action="/delbook?isbn_13=${isbn_13}" method="post"><button class="btn btn-danger px-1 mx-1" id="delete-book" type="submit">Delete</button></form>
+  </div>
 </form>`;
 
     document.getElementById('book-edit').innerHTML = str;
-
+    $('#book-edit-modal').modal('toggle')
   });
 });

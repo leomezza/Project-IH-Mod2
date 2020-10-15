@@ -7,21 +7,33 @@
 
   <span class="navbar-text ml-2 mr-4">{{loggedUser.firstName}} {{loggedUser.lastName}}</span>
 
-  <button class="btn btn-primary p-1" id="new-book">New book</button>
+  <button class="btn btn-primary p-1" data-toggle="modal" data-target="#book-search-modal" id="new-book">New
+    book</button>
 
   <a class="nav-link text-white ml-4 mr-2 bg-danger rounded p-1" href="/logout">Logout</a>
 </nav>
 
-<div id="book-search">
+<div class="modal fade" id="book-search-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div id="book-search" class="modal-body">
+
+      </div>
+      <div id="book-result" class="modal-body">
+
+      </div>
+      <div id="add-book-form" class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button id="close-modal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div id="book-result">
-</div>
 
-<div id="add-book-form">
-</div>
-
-<div class="row my-2">
+<div class="row mx-1 my-2">
 
   <div class="col-9">
 
@@ -33,10 +45,11 @@
         {{#each data}}
         <div class="col mb-4 p-2">
           <div class="book-info card h-100">
-            <div class="title card-header h5 bg-secondary p-2"><span class="titlein h5">{{title}}</span></div>
+            <div class="title card-header h5 bg-secondary p-2 d-flex justify-content-center align-items-center"
+              style="height: 5rem;"><span class="titlein h5 text-center">{{title}}</span></div>
             <div class="coverURL"><img class="coverURLin card-img-top" src="{{coverURL}}" alt="Cover not available">
             </div>
-            <div class="card-body p-2 bg-white">
+            <div class="card-body d-flex flex-column justify-content-end p-2 bg-white">
               <div class="author card-text h6">Authors:
                 {{#each author}}
                 <p><span class="authorin pl-4">{{this}}</span></p>
@@ -69,7 +82,7 @@
 
   <div class="col-3">
 
-    <section class="bg-light border-secondary rounded mr-1">
+    <section class="bg-light border-secondary rounded">
       <h2 class="bg-secondary p-2 text-center">{{mostRead.length}} Most read</h2>
       {{#if mostRead}}
       <div class="most-read-list py-2">
@@ -89,7 +102,7 @@
       {{/if}}
     </section>
 
-    <section class="mt-3 bg-light border-secondary rounded mr-1">
+    <section class="mt-3 bg-light border-secondary rounded">
       <h2 class="bg-secondary p-2 text-center">{{mostRec.length}} Most recommended</h2>
       {{#if mostRec}}
       <div class="most-rec-list py-2">
@@ -112,7 +125,17 @@
 
 </div>
 
-<section id="book-edit">
-</section>
+<div class="modal fade" id="book-edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <section id="book-edit" class="modal-body">
+
+      </section>
+      <div class="modal-footer">
+        <button id="close-modal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="/javascripts/dashboard.js" charset="utf-8"></script>
