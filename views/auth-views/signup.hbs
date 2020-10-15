@@ -15,7 +15,7 @@
 
   <div>
     <label for="inputEmail" class="sr-only">E-mail</label>
-    <input type="text" name="username" id="username" class="form-control mb-2 pl-2" placeholder="Enter your e-mail"
+    <input type="text" name="username" id="username" class="form-control mb-2 pl-2" placeholder="E-mail"
       required onkeyup="manage(this)">
     {{#if usernameError}}
     <div>
@@ -26,7 +26,7 @@
 
   <div>
     <label for="inputPhone" class="sr-only">Telephone</label>
-    <input type="text" name="phone" id="phone" class="form-control mb-2 pl-2" placeholder="Enter your telephone"
+    <input type="text" name="phone" id="phone" class="form-control mb-2 pl-2" placeholder="Telephone"
       required onkeyup="manage(this)" onkeypress="return isNumberKey(event)">
   </div>
 
@@ -45,13 +45,13 @@
   <div>
     <label for="inputSecretAnswer" class="sr-only">Secret Answer</label>
     <input type="text" name="secretAnswer" id="secretAnswer" class="form-control mb-2 pl-2"
-      placeholder="Enter your secret answer" required onkeyup="manage(this)">
+      placeholder="Secret answer" required onkeyup="manage(this)">
   </div>
 
 
   <div>
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="password" id="password" class="form-control mb-2 pl-2" placeholder="Enter a password"
+    <input type="password" name="password" id="password" class="form-control mb-2 pl-2" placeholder="Password"
       required onkeyup="manage(this)">
     {{#if passwordError}}
     <div>
@@ -63,7 +63,7 @@
   <div>
     <label for="inputConfirmPassword" class="sr-only">Confirm Password</label>
     <input type="password" name="confirmationPassword" id="confirmationPassword" class="form-control mb-2 pl-2"
-      placeholder="Confirm your password" required onkeyup="manage(this)">
+      placeholder="Confirm password" required onkeyup="manage(this)">
     {{#if confirmationPasswordError}}
     <div>
       <span>{{confirmationPasswordError}}</span>
