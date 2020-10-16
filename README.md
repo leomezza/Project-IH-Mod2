@@ -18,20 +18,21 @@ This is our second coding project as part of the IronHack bootcamp - SAO-29-WD-P
 
 1. Sign up for an account
 2. Login with your user
-3. Add your books from the public API Open Library using the ISBN
+3. Add your books from the public API Open Library using the ISBN with 10 or 13 digits
 4. Set your read status and evaluation
 5. Watch the most read and recommended books
 6. Edit your read status and evaluation
 
 ## How to use our app
 
-You can use and modify our project by downloading/cloning the project files or you can run our online instance running in [Heroku](https://orbuk.herokuapp.com/)
+You can use and modify our project by downloading/cloning the project files or you can run our online instance from [Heroku](https://orbuk.herokuapp.com/)
 
 ## Version
 
-| Version | Comments                             |
-| ------- | ------------------------------------ |
-| 0.1     | Initial release, basic functionality |
+| Version | Comments                                  |
+| ------- | ----------------------------------------- |
+| 0.1     | Initial release, basic functionality      |
+| 0.2     | Bug fixes, Responsiveness and modal added |
 
 ## Authors
 
@@ -50,7 +51,8 @@ You can use and modify our project by downloading/cloning the project files or y
 - Book Borrowing and Book Lending platform
 - Avatar upload
 - Customizable books cover
-- Responsiveness
+- Social login
+- Handlebar partials
 
 ## Acknowledgments
 

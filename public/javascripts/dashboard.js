@@ -16,14 +16,27 @@ function drawBook(book, isbnToSearch) {
   let isbn_10 = bookDetails.isbn_10;
   if (isbn_10 === undefined && isbnToSearch.length === 10) {
     isbn_10 = isbnToSearch;
-  } else if (isbnToSearch.length === 13) {
+  } else if (isbn_10 === undefined && isbnToSearch.length === 13) {
     isbn_10 = 'Not available';
   } else {
     isbn_10 = isbn_10[0];
   }
-  const isbn_13 = bookDetails.isbn_13[0];
+
+  let isbn_13;
+  if (!bookDetails.isbn_13) {
+    isbn_13 = isbn_10;
+  } else {
+    isbn_13 = bookDetails.isbn_13[0];
+  };
   const title = bookDetails.title;
-  const author = bookDetails.authors;
+
+  let author;
+  if (!bookDetails.authors) {
+    author = [{ name: 'Author was not found in the API' }];
+  } else {
+    author = bookDetails.authors;
+  }
+
   let authorsArray = [];
   author.forEach(element => authorsArray.push(element.name));
   let authorsHTML = '';
@@ -141,14 +154,20 @@ document.getElementById('new-book').addEventListener('click', async event => {
 
   document.getElementById('isbn-search').addEventListener('click', async event => {
     event.preventDefault();
-    const isbnToSearch = document.getElementById('isbn-num').value;
+    let isbnToSearch = document.getElementById('isbn-num').value;
+    isbnToSearch = isbnToSearch.replace(/[^Xx0-9]/g, '');
     console.log(isbnToSearch);
 
     const { data } = await bookSearch(isbnToSearch);
-    drawBook(data, isbnToSearch);
-    document.getElementById('book-add').addEventListener('click', async event => {
-      addBook(data, isbnToSearch);
-    });
+    console.log('The data is:', data);
+    if (Object.keys(data).length === 0 && data.constructor === Object) {
+      document.getElementById('book-result').innerHTML = '<div class="bg-danger text-white p-2 rounded">Book not found</div>';
+    } else {
+      drawBook(data, isbnToSearch);
+      document.getElementById('book-add').addEventListener('click', async event => {
+        addBook(data, isbnToSearch);
+      });
+    };
   });
 });
 
@@ -177,26 +196,26 @@ document.querySelectorAll('.book-info').forEach(book => {
     console.log(titleHTML);
 
     const str = `<form action="/editbook" method="post">
-    <div class="coverURL">${coverHTML}</div>
-  <div class="title">${titleHTML}</div>
-  <div class="author">${authorsHTML}</div>
+    <div class="coverURL w-50">${coverHTML}</div>
+  <div class="title btn-secondary rounded my-1 p-1">${titleHTML}</div>
+  <div class="author font-weight-bold">${authorsHTML}</div>
   <div class="isbn_10">${isbn_10HTML}</div>
   <div class="isbn_13">${isbn_13HTML}</div>
   <input type='hidden' name='isbn_13' value='${isbn_13}'>
-  <div class="summary">${summaryHTML}</div>
+  <div class="summary py-1 font-weight-bold">${summaryHTML}</div>
   <div class="evaluation">Current Evaluation: <span class="evaluationin">${evaluation}</span></div>
-  <div>
-    <label for="eval">New Evaluation</label>
-    <select name="eval" id="eval" required>
+  <div class="mb-1">
+    <label for="eval" style="display:none"></label>
+    <select class="custom-select" name="eval" id="eval" required>
     <option value="Up">Thumbs Up</option>
     <option value="Down">Thumbs Down</option>
     <option value="None">Neutral</option>
     </select>
   </div>
   <div class="readStatus">Current Read Status: <span class="readStatusin">${readStatus}</span></div>
-  <div>
-    <label for="status">New Read Status</label>
-    <select name="status" id="status" required>
+  <div class="mb-1">
+    <label for="status" style="display:none"></label>
+    <select class="custom-select" name="status" id="status" required>
     <option value="Reading">Reading</option>
     <option value="Interested">Interested</option>
     <option value="Finished">Finished</option>
