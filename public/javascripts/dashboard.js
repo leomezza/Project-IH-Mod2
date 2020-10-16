@@ -148,9 +148,13 @@ function addBook(book, isbnToSearch) {
 document.getElementById('new-book').addEventListener('click', async event => {
   const str = `<label for="isbn-num">Search book by ISBN:</label>
   <input type="string" name="isbn-num" id="isbn-num" />
-  <button id="isbn-search" class="btn btn-primary">Search</button>`
+  <button id="isbn-search" class="btn btn-primary" type="button">Search</button>`
 
   document.getElementById('book-search').innerHTML = str;
+
+  $('#isbn-search').click(function () {
+    $('#isbn-search').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+  });
 
   document.getElementById('isbn-search').addEventListener('click', async event => {
     event.preventDefault();
@@ -159,6 +163,7 @@ document.getElementById('new-book').addEventListener('click', async event => {
     console.log(isbnToSearch);
 
     const { data } = await bookSearch(isbnToSearch);
+    $('#isbn-search').html('Search').removeClass('disabled');
     console.log('The data is:', data);
     if (Object.keys(data).length === 0 && data.constructor === Object) {
       document.getElementById('book-result').innerHTML = '<div class="bg-danger text-white p-2 rounded">Book not found</div>';
@@ -232,3 +237,11 @@ document.querySelectorAll('.book-info').forEach(book => {
     $('#book-edit-modal').modal('toggle')
   });
 });
+
+$( ".card" ).hover(
+  function() {
+    $(this).addClass('shadow-lg border-primary'); 
+  }, function() {
+    $(this).removeClass('shadow-lg border-primary');
+  }
+);
