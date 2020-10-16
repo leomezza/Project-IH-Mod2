@@ -35,22 +35,23 @@
 
 <div class="row mx-1 my-2">
 
-  <div class="col-9">
+  <div class="col-md-9">
 
     <main>
       {{#if data}}
       <h2>My Books<span class="badge badge-primary ml-2 p-2">{{data.length}}</span>
         <span class="sr-only">Number of books added</span></h2>
-      <div class="books-list row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+      <div class="books-list row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
         {{#each data}}
         <div class="col mb-4 p-2">
           <div class="book-info card h-100">
-            <div class="title card-header h5 bg-secondary p-2 d-flex justify-content-center align-items-center"
-              style="height: 5rem;"><span class="titlein h5 text-center">{{title}}</span></div>
+            <div
+              class="title card-header h5 font-weight-normal bg-secondary p-1 d-flex justify-content-center align-items-center align-middle"
+              style="height: 7rem;"><span class="titlein h5 text-center">{{title}}</span></div>
             <div class="coverURL"><img class="coverURLin card-img-top" src="{{coverURL}}" alt="Cover not available">
             </div>
             <div class="card-body d-flex flex-column justify-content-end p-2 bg-white">
-              <div class="author card-text h6">Authors:
+              <div class="author card-text h6 font-weight-bold">Authors:
                 {{#each author}}
                 <p><span class="authorin pl-4">{{this}}</span></p>
                 {{/each}}
@@ -80,7 +81,7 @@
     </main>
   </div>
 
-  <div class="col-3">
+  <div class="col-md-3">
 
     <section class="bg-light border-secondary rounded">
       <h2 class="bg-secondary p-2 text-center">{{mostRead.length}} Most read</h2>
@@ -88,9 +89,8 @@
       <div class="most-read-list py-2">
         {{#each mostRead}}
         <div class="read-book-info">
-          <div class="title"><span class="badge badge-primary ml-2 py-1 px-2">{{size}}</span>
+          <div class="title align-middle m-1"><span class="badge badge-primary ml-2 py-1 px-2">{{size}}</span>
             <span class="sr-only">Read count</span><span>{{title}}</span></div>
-          {{!-- <div class="readStatus">Read count: <span>{{size}}</span></div> --}}
         </div>
         {{/each}}
       </div>
@@ -108,9 +108,8 @@
       <div class="most-rec-list py-2">
         {{#each mostRec}}
         <div class="rec-book-info">
-          <div class="title"></span><span class="badge badge-primary ml-2 py-1 px-2">{{size}}</span>
+          <div class="title align-middle m-1"></span><span class="badge badge-primary ml-2 py-1 px-2">{{size}}</span>
             <span class="sr-only">Thumbs up count</span><span>{{title}}</span></div>
-          {{!-- <div class="evaluation">Up count: <span>{{size}}</span></div> --}}
         </div>
         {{/each}}
       </div>
