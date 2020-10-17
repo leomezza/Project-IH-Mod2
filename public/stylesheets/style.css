@@ -1,5 +1,5 @@
 * {
-  font-family: 'Lato', Arial, Helvetica, sans-serif !important;
+  font-family: "Lato", Arial, Helvetica, sans-serif !important;
 }
 
 body {
@@ -7,30 +7,58 @@ body {
 }
 
 #login-info {
-  padding-right: 200px;
   width: 500px;
 }
 
-.carousel  img {
+.carousel img {
   height: 100vh !important;
-  width: 500px !important;
+  width: 100% !important;
 }
 
 #carouselExampleSlidesOnly {
-  width: 500px;
+  width: 100%;
   height: 100vh;
-  box-sizing: border-box;
 }
 
 .forgot-password {
   font-size: 12px;
 }
 
-.form-signup div , .form-forgot div{
-  width: 500px;
-}
-
-.form-signup, .form-forgot {
+.form-signup,
+.form-forgot {
   margin-top: 100px;
 }
 
+.invalid {
+  font-size: 14px;
+}
+
+@media (min-width: 720px ) {
+  .carousel img {
+    height: 100vh;
+    width: 500px;
+  }
+  
+  #carouselExampleSlidesOnly {
+    width: 500px;
+    height: 100vh;
+  }
+}
+
+
+@media (max-width: 720px) {
+  .overlay{
+    background-color: rgba(255, 255, 255, 0.7);
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
+
+  #login-info {
+    position: absolute;
+    width: 100%;
+    margin-right: 2rem;
+  }
+}
