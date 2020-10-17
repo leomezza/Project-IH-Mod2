@@ -36,7 +36,7 @@ const verifyLoginData = async (req, res, next) => {
 
   const isPasswordMatch = verifyPassword(password, userExists.password);
 
-  if (!isPasswordMatch) {
+  if (!userExists || !isPasswordMatch) {
     res.render('auth-views/index', { errorMessage: 'Incorrect username or password, please try again' });
 
     return;
