@@ -29,10 +29,11 @@ You can use and modify our project by downloading/cloning the project files or y
 
 ## Version
 
-| Version | Comments                                  |
-| ------- | ----------------------------------------- |
-| 0.1     | Initial release, basic functionality      |
-| 0.2     | Bug fixes, Responsiveness and modal added |
+| Version | Comments                                          |
+| ------- | ------------------------------------------------- |
+| 0.1     | Initial release, basic functionality              |
+| 0.2     | Bug fixes, Responsiveness and modal added         |
+| 0.3     | Improved navbar, responsiveness and avatar upload |
 
 ## Authors
 
@@ -49,7 +50,6 @@ You can use and modify our project by downloading/cloning the project files or y
 ## Roadmap
 
 - Book Borrowing and Book Lending platform
-- Avatar upload
 - Customizable books cover
 - Social login
 - Handlebar partials

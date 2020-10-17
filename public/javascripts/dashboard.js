@@ -137,9 +137,8 @@ function addBook(book, isbnToSearch) {
     </select>
   </div>
 
-  <button type="submit">Add</button>
+  <button class="btn btn-primary" type="submit">Save</button>
 
-  <button type="button">Cancel</button>
 </form>`;
 
   document.getElementById('add-book-form').innerHTML = str;
