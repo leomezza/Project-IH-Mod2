@@ -144,35 +144,39 @@ function addBook(book, isbnToSearch) {
   document.getElementById('add-book-form').innerHTML = str;
 }
 
-document.getElementById('new-book').addEventListener('click', async event => {
-  const str = `<label for="isbn-num">Search book by ISBN:</label>
-  <input type="string" name="isbn-num" id="isbn-num" />
-  <button id="isbn-search" class="btn btn-primary" type="button">Search</button>`
+document.querySelectorAll('.new-book').forEach(addButton => {
 
-  document.getElementById('book-search').innerHTML = str;
+  addButton.addEventListener('click', async event => {
+    const str = `<label for="isbn-num">Search book by ISBN:</label>
+    <input type="string" name="isbn-num" id="isbn-num" />
+    <button id="isbn-search" class="btn btn-primary" type="button">Search</button>`
 
-  $('#isbn-search').click(function () {
-    $('#isbn-search').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+    document.getElementById('book-search').innerHTML = str;
+
+    $('#isbn-search').click(function () {
+      $('#isbn-search').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+    });
+
+    document.getElementById('isbn-search').addEventListener('click', async event => {
+      event.preventDefault();
+      let isbnToSearch = document.getElementById('isbn-num').value;
+      isbnToSearch = isbnToSearch.replace(/[^Xx0-9]/g, '');
+      console.log(isbnToSearch);
+
+      const { data } = await bookSearch(isbnToSearch);
+      $('#isbn-search').html('Search').removeClass('disabled');
+      console.log('The data is:', data);
+      if (Object.keys(data).length === 0 && data.constructor === Object) {
+        document.getElementById('book-result').innerHTML = '<div class="bg-danger text-white p-2 rounded">Book not found</div>';
+      } else {
+        drawBook(data, isbnToSearch);
+        document.getElementById('book-add').addEventListener('click', async event => {
+          addBook(data, isbnToSearch);
+        });
+      };
+    });
   });
 
-  document.getElementById('isbn-search').addEventListener('click', async event => {
-    event.preventDefault();
-    let isbnToSearch = document.getElementById('isbn-num').value;
-    isbnToSearch = isbnToSearch.replace(/[^Xx0-9]/g, '');
-    console.log(isbnToSearch);
-
-    const { data } = await bookSearch(isbnToSearch);
-    $('#isbn-search').html('Search').removeClass('disabled');
-    console.log('The data is:', data);
-    if (Object.keys(data).length === 0 && data.constructor === Object) {
-      document.getElementById('book-result').innerHTML = '<div class="bg-danger text-white p-2 rounded">Book not found</div>';
-    } else {
-      drawBook(data, isbnToSearch);
-      document.getElementById('book-add').addEventListener('click', async event => {
-        addBook(data, isbnToSearch);
-      });
-    };
-  });
 });
 
 $('#book-search-modal').on('hidden.bs.modal', function (e) {

@@ -17,7 +17,7 @@
         <span class="navbar-text mr-0 mr-md-2">{{loggedUser.firstName}} {{loggedUser.lastName}}</span>
       </li>
       <li class="nav-item my-auto ml-auto ml-md-2">
-        <button class="btn btn-primary p-1 align-middle" data-toggle="modal" data-target="#book-search-modal"
+        <button class="btn btn-primary p-1 align-middle new-book" data-toggle="modal" data-target="#book-search-modal"
           id="new-book">New
           book</button>
       </li>
@@ -90,8 +90,11 @@
       </div>
 
       {{else}}
-      <div class="empty-books">
+      <div class="empty-books d-flex flex-column align-items-center align-middle justify-content-center mt-5">
         <h2>There are no books yet</h2>
+        <button class="btn btn-primary btn-lg p-1 align-middle new-book" data-toggle="modal" data-target="#book-search-modal">
+          New book
+        </button>
       </div>
       {{/if}}
     </main>
@@ -113,7 +116,7 @@
 
       {{else}}
       <div class="empty-books">
-        <h2>There are no read books yet</h2>
+        <p>There are no read books yet</p>
       </div>
       {{/if}}
     </section>
@@ -132,7 +135,7 @@
 
       {{else}}
       <div class="empty-books">
-        <h2>There are no recommended books yet</h2>
+        <p>There are no recommended books yet</p>
       </div>
       {{/if}}
     </section>
