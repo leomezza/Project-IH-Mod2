@@ -3,6 +3,8 @@ const router = express.Router();
 const Book = require('../models/Book.model');
 const User = require('../models/User.model');
 
+const fileUploader = require('../configs/cloudinary.config');
+
 const protRoutes = require('../middlewares/protRoutes');
 
 router.use(protRoutes);
@@ -150,6 +152,38 @@ router.post('/delbook', async (req, res) => {
   console.log('A book has been removed from the user list');
 
   res.redirect('/dashboard');
+});
+
+const teste = (req, res, next) => {
+  try {
+    fileUploader.single('image')(req, res, next);
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+router.post('/avatar', fileUploader.single('image'), async (req, res, next) => {
+  console.log('New avatar');
+  const userID = req.session.currentUser._id;
+  let imageAvatar;
+
+  console.log(req.file);
+
+  if (req.file) {
+    imageAvatar = req.file.path;
+  } else {
+    imageAvatar = req.body.existingImage;
+  };
+
+  try {
+    await User.findByIdAndUpdate(userID, { $set: { imageAvatar } }, { new: true });
+    req.session.currentUser.imageAvatar = imageAvatar;
+    res.redirect('/dashboard');
+  } catch (error) {
+    console.log(`Error while editing avatar image: ${error}`)
+  }
+
 });
 
 module.exports = router;

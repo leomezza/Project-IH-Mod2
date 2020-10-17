@@ -11,17 +11,19 @@
     <span class="navbar-text font-weight-bold">Your book network</span>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item ml-auto ml-md-0">
-        <img class="avatar-image" src="{{loggedUser.imageAvatar}}" width="50" height="50"
-          alt="user-avatar">
+        <img class="avatar-image rounded-circle" role="button" data-toggle="modal" data-target="#avatar-edit-modal"
+          src="{{loggedUser.imageAvatar}}" width="50" height="50" alt="user-avatar">
 
         <span class="navbar-text mr-0 mr-md-2">{{loggedUser.firstName}} {{loggedUser.lastName}}</span>
       </li>
       <li class="nav-item my-auto ml-auto ml-md-2">
-        <button class="btn btn-primary p-1 align-middle" data-toggle="modal" data-target="#book-search-modal" id="new-book">New
+        <button class="btn btn-primary p-1 align-middle" data-toggle="modal" data-target="#book-search-modal"
+          id="new-book">New
           book</button>
       </li>
       <li class="nav-item my-auto ml-auto ml-md-2">
-        <a class="nav-link text-white ml-0 ml-md-2 mr-0 mr-md-1 bg-danger rounded p-1 my-2 my-md-0 align-middle" href="/logout">Logout</a>
+        <a class="nav-link text-white ml-0 ml-md-2 mr-0 mr-md-1 bg-danger rounded p-1 my-2 my-md-0 align-middle"
+          href="/logout">Logout</a>
       </li>
     </ul>
   </div>
@@ -144,6 +146,31 @@
       <section id="book-edit" class="modal-body">
 
       </section>
+      <div class="modal-footer">
+        <button id="close-modal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="avatar-edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content p-2">
+      <h2>Update avatar</h2>
+
+      <form action="/avatar" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="image-input">
+            <p class="m-1">Current avatar:</p>
+            <img class="avatar-image w-25" src="{{loggedUser.imageAvatar}}" alt="user-avatar">
+          </label>
+
+          <input type="file" name="image" id="image-input" class="form-control-file" />
+          <input type="text" name="existingImage" hidden id="" value="{{loggedUser.imageAvatar}}">
+        </div>
+
+        <button type="submit" class="btn btn-success mb-2">Save new avatar</button>
+      </form>
       <div class="modal-footer">
         <button id="close-modal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
