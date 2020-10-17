@@ -43,6 +43,7 @@ function drawBook(book, isbnToSearch) {
   authorsArray.forEach(element => {
     authorsHTML += `<li>${element}</li>`;
   });
+
   let cover = book[isbnFound].thumbnail_url;
   console.log('The cover is ', cover)
   if (cover === undefined) cover = './images/Default-Book-Cover.jpg';
@@ -96,11 +97,30 @@ function addBook(book, isbnToSearch) {
   } else {
     isbn_10 = isbn_10[0];
   }
-  const isbn_13 = bookDetails.isbn_13[0];
+
+  let isbn_13;
+  if (!bookDetails.isbn_13) {
+    isbn_13 = isbn_10;
+  } else {
+    isbn_13 = bookDetails.isbn_13[0];
+  };
+
   const title = bookDetails.title;
-  const author = bookDetails.authors;
+
+  let author;
+  if (!bookDetails.authors) {
+    author = [{ name: 'Author was not found in the API' }];
+  } else {
+    author = bookDetails.authors;
+  }
+
   let authorsArray = [];
   author.forEach(element => authorsArray.push(element.name));
+  let authorsHTML = '';
+  authorsArray.forEach(element => {
+    authorsHTML += `<li>${element}</li>`;
+  });
+
   let cover = book[isbnFound].thumbnail_url;
   if (cover === undefined) {
     cover = './images/Default-Book-Cover.jpg';
