@@ -12,10 +12,6 @@ const redirectIfLoggedIn = require('../middlewares/redirectIfLoggedIn');
 
 /* GET home page */
 router.get('/', redirectIfLoggedIn, (req, res, next) => {
-  res.render('auth-views/index.hbs');
-});
-
-router.get('/', (req, res) => {
   console.log('Login page');
   res.render('auth-views/index.hbs', req.query);
 });
@@ -79,8 +75,8 @@ router.post('/forgotpass', verifyForgotData, async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    await User.findOneAndUpdate({username}, 
-      {password: await generateEncryptedPassword(password)});
+    await User.findOneAndUpdate({ username },
+      { password: await generateEncryptedPassword(password) });
 
     res.redirect('/');
   } catch (error) {
