@@ -62,23 +62,23 @@ function drawBook(book, isbnToSearch) {
     str = `<div class="book-info">
     <div class="coverURL"><img style="height: 100px;" src="${cover}" alt="Cover not available"></div>
     <div class="title">Title: <span>${title}</span></div>
-    <div class="author">Authors: <ul>${authorsHTML}</ul></div>
+    <div class="author font-weight-bold mt-1">Authors: <ul>${authorsHTML}</ul></div>
     <div class="isbn_10">ISBN-10: <span>${isbn_10}</span></div>
     <div class="isbn_13">ISBN-13: <span>${isbn_13}</span></div>
-    <div class="summary">Summary: <span>${summary}</span></div>
-    <span class="bg-danger">You already have this book</span>
-    <button class="btn btn-primary" style="display:none" id="book-add" data-toggle="modal" data-target="#add-book-form-modal">Add Book</button>
+    <div class="summary font-weight-bold mt-1">Summary: <span>${summary}</span></div>
+    <div class="bg-danger p-2 rounded mt-2 text-center">You already have this book</div>
+    <button class="btn btn-primary p-2 rounded mt-2 text-center" style="display:none" id="book-add" data-toggle="modal" data-target="#add-book-form-modal">Add Book</button>
     </div>`;
   } else {
     console.log('User does not have this book yet');
     str = `<div class="book-info">
     <div class="coverURL"><img style="height: 100px;" src="${cover}" alt="Cover not available"></div>
     <div class="title">Title: <span>${title}</span></div>
-    <div class="author">Authors: <ul>${authorsHTML}</ul></div>
+    <div class="author font-weight-bold mt-1">Authors: <ul>${authorsHTML}</ul></div>
     <div class="isbn_10">ISBN-10: <span>${isbn_10}</span></div>
     <div class="isbn_13">ISBN-13: <span>${isbn_13}</span></div>
-    <div class="summary">Summary: <span>${summary}</span></div>
-    <button class="btn btn-primary" id="book-add" data-toggle="modal" data-target="#add-book-form-modal">Add Book</button>
+    <div class="summary font-weight-bold mt-1">Summary: <span>${summary}</span></div>
+    <button class="btn btn-primary p-2 rounded mt-2 btn-block" id="book-add" data-toggle="modal" data-target="#add-book-form-modal">Add Book</button>
     </div>`;
   }
 
@@ -238,10 +238,10 @@ document.querySelectorAll('.book-info').forEach(book => {
   });
 });
 
-$( ".card" ).hover(
-  function() {
-    $(this).addClass('shadow-lg border-primary'); 
-  }, function() {
-    $(this).removeClass('shadow-lg border-primary');
+$(".card").hover(
+  function () {
+    $(this).addClass('shadow-lg border-info');
+  }, function () {
+    $(this).removeClass('shadow-lg border-info');
   }
 );
